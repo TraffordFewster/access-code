@@ -8,11 +8,24 @@
             "Traffordfewster\\AccessCode\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Traffordfewster\\AccessCode\\Tests\\": "tests/"
+        }
+    },
     "authors": [
         {
             "name": "Trafford Fewster",
             "email": "contact@trafford.dev"
         }
     ],
-    "require": {}
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
+    "scripts": {
+        "test": "phpunit tests"
+    }
 }
