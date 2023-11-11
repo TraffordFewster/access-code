@@ -1,16 +1,17 @@
 {
+    "version": "1.0.0",
     "name": "traffordfewster/access-code",
     "description": "A laravel package for generating and assigning access codes.",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Traffordfewster\\AccessCode\\": "src/"
+            "Traffordfewster\\AccessCode\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Traffordfewster\\AccessCode\\Tests\\": "tests/"
+            "Traffordfewster\\AccessCode\\Tests\\": "tests"
         }
     },
     "authors": [
@@ -20,12 +21,21 @@
         }
     ],
     "require": {
-        "php": "^8.2"
+        "php": "^8.2",
+        "illuminate/support": "^10.31",
+        "illuminate/database": "^10.31"
     },
     "require-dev": {
         "phpunit/phpunit": "^10.0"
     },
     "scripts": {
         "test": "phpunit tests"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Traffordfewster\\AccessCode\\AccessCodeServiceProvider"
+            ]
+        }
     }
 }
