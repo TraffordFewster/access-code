@@ -6,7 +6,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Traffordfewster\\AccessCode\\": "src"
+            "Traffordfewster\\AccessCode\\": "src",
+            "Traffordfewster\\AccessCode\\Traits\\": "src/traits"
         }
     },
     "autoload-dev": {
