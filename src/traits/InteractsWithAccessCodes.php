@@ -91,4 +91,20 @@ trait InteractsWithAccessCodes
     {
         return $this->accessCodes()->where('code', $code)->delete();
     }
+
+    /**
+     * Find a model with a code.
+     *
+     * @param  string $code The code to find.
+     * @return self The model.
+     */
+    public static function findWithCode(string $code): self
+    {
+        $accessCode = AccessCode::where([
+            'code' => $code,
+            'model_type' => self::class,
+        ])->firstOrFail();
+
+        return $accessCode->model;
+    }
 }
