@@ -63,7 +63,7 @@ class AccessCode extends Model
     {
         $generator ??= new BaseGenerator();
 
-        if ($errors = $generator->validateValue($code)) {
+        if ($errors = $generator->validateValue($code) && !empty($errors)) {
             throw new InvalidCodeException($errors[0]);
         }
 

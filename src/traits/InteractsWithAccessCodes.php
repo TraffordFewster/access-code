@@ -35,19 +35,19 @@ trait InteractsWithAccessCodes
      * Generate an access code.
      *
      * @param  int|null $length The length of the code.
-     * @return AccessCode The access code.
+     * @return string The access code.
      */
-    public function generateAccessCode(BaseGenerator $generator): AccessCode
+    public function generateAccessCode(BaseGenerator $generator = null): string
     {
         $generator ??= new BaseGenerator();
 
         $accessCode = new AccessCode();
 
-        $accessCode->generateCode($generator);
+        $code = $accessCode->generateCode($generator);
 
         $this->accessCodes()->save($accessCode);
 
-        return $accessCode;
+        return $code;
     }
 
     /**
@@ -55,10 +55,10 @@ trait InteractsWithAccessCodes
      *
      * @param  string             $code The code to set.
      * @param  BaseGenerator|null $generator The generator to use to validate the code.
-     * @return AccessCode The access code.
+     * @return string The access code.
      * @throws InvalidCodeException If the code is invalid.
      */
-    public function setAccessCode(string $code, BaseGenerator $generator = null): AccessCode
+    public function setAccessCode(string $code, BaseGenerator $generator = null): string
     {
         $generator ??= new BaseGenerator();
 
@@ -68,7 +68,7 @@ trait InteractsWithAccessCodes
 
         $this->accessCodes()->save($accessCode);
 
-        return $accessCode;
+        return $code;
     }
 
     /**
