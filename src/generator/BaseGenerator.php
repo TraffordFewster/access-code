@@ -4,6 +4,8 @@ namespace Traffordfewster\AccessCode\Generator;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use Traffordfewster\AccessCode\Exceptions\InvalidCodeException;
 use Traffordfewster\AccessCode\Rules\NoPalindrome;
 
 class BaseGenerator
@@ -22,24 +24,31 @@ class BaseGenerator
      *
      * @param  string $value The value to validate.
      * @return array The validated value.
+     * @throws InvalidCodeException If the value is invalid.
      */
-    public function validateValue(string $value): array
+    public function validateValue(string $value): bool
     {
-        return Validator::make([
-            'value' => $value,
-        ], [
-            'value' => [
-                'required',
-                'string',
-                $this->numberOnly ? "digits:$this->length" : "size:$this->length",
-                // "max:$this->length",
-                $this->numberOnly ? 'numeric' : 'alpha_num',
-                $this->allowPalindrome ? '' : new NoPalindrome,
-                'unique:access_codes,code'
-            ],
-        ], [
-            'value.different' => 'The code must not be a palindrome.',
-        ])->validate();
+        try {
+            Validator::make([
+                'value' => $value,
+            ], [
+                'value' => [
+                    'required',
+                    'string',
+                    $this->numberOnly ? "digits:$this->length" : "size:$this->length",
+                    // "max:$this->length",
+                    $this->numberOnly ? 'numeric' : 'alpha_num',
+                    $this->allowPalindrome ? '' : new NoPalindrome,
+                    'unique:access_codes,code'
+                ],
+            ], [
+                'value.different' => 'The code must not be a palindrome.',
+            ])->validate();
+            
+            return true;
+        } catch (ValidationException $exception) {
+            throw new InvalidCodeException($exception->getMessage());
+        }
     }
 
     /**
@@ -57,7 +66,9 @@ class BaseGenerator
                 : Str::random(1);
         }
 
-        if ($errors = $this->validateValue($code) && !empty($errors)) {
+        try {
+            $this->validateValue($code);
+        } catch (InvalidCodeException $exception) {
             return $this->generateCode();
         }
 

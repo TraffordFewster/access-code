@@ -87,7 +87,7 @@ trait InteractsWithAccessCodes
      * @param  string $code The code to delete.
      * @return bool Whether the code was deleted.
      */
-    public function deleteCode(string $code): bool
+    public function deleteAccessCode(string $code): bool
     {
         return $this->accessCodes()->where('code', $code)->delete();
     }
