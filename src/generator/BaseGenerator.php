@@ -57,7 +57,7 @@ class BaseGenerator
                 : Str::random(1);
         }
 
-        if (!$this->validateValue($code)) {
+        if ($errors = $this->validateValue($code) && !empty($errors)) {
             return $this->generateCode();
         }
 
