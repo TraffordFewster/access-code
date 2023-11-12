@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('model');
             $table->string('code')->unique();
-            $table->string('code_criteria');
+            $table->longText('code_criteria');
             $table->timestamps();
         });
     }

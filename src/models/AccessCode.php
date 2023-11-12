@@ -4,7 +4,6 @@ namespace Traffordfewster\AccessCode\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Support\Facades\Hash;
 use Traffordfewster\AccessCode\Exceptions\InvalidCodeException;
 use Traffordfewster\AccessCode\Generator\BaseGenerator;
 
@@ -30,7 +29,7 @@ class AccessCode extends Model
      */
     public function checkCode(string $code): bool
     {
-        return Hash::check($code, $this->code);
+        return $code === $this->code;
     }
 
     /**
@@ -45,8 +44,8 @@ class AccessCode extends Model
 
         $code = $generator->generateCode();
 
-        $this->code = Hash::make($code);
-        $this->code_criteria = $generator->getCriteriaHash();
+        $this->code = $code;
+        $this->code_criteria = (string) $generator;
 
         return $code;
     }
@@ -67,8 +66,8 @@ class AccessCode extends Model
             throw new InvalidCodeException($errors[0]);
         }
 
-        $this->code = Hash::make($code);
-        $this->code_criteria = $generator->getCriteriaHash();
+        $this->code = $code;
+        $this->code_criteria = (string) $generator;
 
         return $code;
     }

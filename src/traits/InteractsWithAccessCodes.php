@@ -3,7 +3,6 @@
 namespace Traffordfewster\AccessCode\Traits;
 
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Support\Facades\Hash;
 use Traffordfewster\AccessCode\Exceptions\InvalidCodeException;
 use Traffordfewster\AccessCode\Generator\BaseGenerator;
 use Traffordfewster\AccessCode\Models\AccessCode;
@@ -79,18 +78,7 @@ trait InteractsWithAccessCodes
      */
     public function checkAccessCode(string $code): bool
     {
-        return $this->checkAccessCodeHash(Hash::make($code));
-    }
-
-    /**
-     * Check if a string matches the access code hash.
-     *
-     * @param  string $codeHash The code hash to check.
-     * @return bool Whether the code is valid.
-     */
-    public function checkAccessCodeHash(string $codeHash): bool
-    {
-        return $this->accessCodes()->where('code', $codeHash)->exists();
+        return $this->accessCodes()->where('code', $code)->exists();
     }
 
     /**
@@ -101,17 +89,6 @@ trait InteractsWithAccessCodes
      */
     public function deleteCode(string $code): bool
     {
-        return $this->deleteCodeHash(Hash::make($code));
-    }
-
-    /**
-     * Delete an access code hash.
-     *
-     * @param  string $codeHash The code hash to delete.
-     * @return bool Whether the code was deleted.
-     */
-    public function deleteCodeHash(string $codeHash): bool
-    {
-        return $this->accessCodes()->where('code', $codeHash)->delete();
+        return $this->accessCodes()->where('code', $code)->delete();
     }
 }

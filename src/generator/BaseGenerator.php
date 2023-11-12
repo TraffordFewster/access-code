@@ -2,7 +2,6 @@
 
 namespace Traffordfewster\AccessCode\Generator;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -18,16 +17,6 @@ class BaseGenerator
     }
 
     /**
-     * Get the criteria hash.
-     *
-     * @return string The criteria hash.
-     */
-    public function getCriteriaHash(): string
-    {
-        return Hash::make($this->__toString());
-    }
-
-    /**
      * Validate a value.
      *
      * @param  string $value The value to validate.
@@ -37,7 +26,6 @@ class BaseGenerator
     {
         return Validator::make([
             'value' => $value,
-            'hashValue' => Hash::make($value),
         ], [
             'value' => [
                 'required',
@@ -46,11 +34,10 @@ class BaseGenerator
                 // "max:$this->length",
                 $this->numberOnly ? 'numeric' : 'alpha_num',
                 $this->allowPalindrome ? '' : 'different:'.strrev($value),
+                'unique:access_codes,code'
             ],
-            'hashValue' => 'unique:access_codes,code',
         ], [
             'value.different' => 'The code must not be a palindrome.',
-            'hashValue.unique' => 'The code must be unique.',
         ])->validate();
     }
 
