@@ -88,4 +88,34 @@ class BaseGenerator
     {
         return json_encode($this->__toArray());
     }
+
+    /**
+     * Get the value of numberOnly
+     *
+     * @return boolean
+     */
+    public function getNumberOnly(): bool
+    {
+        return $this->numberOnly;
+    }
+
+    /**
+     * Get the value of length
+     *
+     * @return int
+     */
+    public function getLength(): int
+    {
+        return $this->length;
+    }
+
+    /**
+     * Get the value of allowPalindrome
+     *
+     * @return boolean
+     */
+    public function getAllowPalindrome(): bool
+    {
+        return $this->allowPalindrome;
+    }
 }
