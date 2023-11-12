@@ -1,5 +1,7 @@
 <?php
 
+namespace Traffordfewster\AccessCode\Tests\Traits;
+
 use Traffordfewster\AccessCode\Exceptions\InvalidCodeException;
 use Traffordfewster\AccessCode\Generator\BaseGenerator;
 use Traffordfewster\AccessCode\Tests\TestCase;
