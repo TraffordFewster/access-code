@@ -36,10 +36,10 @@ class AccessCodeTest extends TestCase
 
     public function test_it_can_check_valid_code()
     {
-        $this->accessCode->code = '12345678';
+        $this->accessCode->code = '112233';
 
-        $this->assertTrue($this->accessCode->checkCode('12345678'));
-        $this->assertFalse($this->accessCode->checkCode('87654321'));
+        $this->assertTrue($this->accessCode->checkCode('112233'));
+        $this->assertFalse($this->accessCode->checkCode('332211'));
     }
 
     public function test_it_can_generate_code()
@@ -51,9 +51,9 @@ class AccessCodeTest extends TestCase
 
     public function test_it_can_set_code()
     {
-        $this->accessCode->setCode('12345678');
+        $this->accessCode->setCode('112233');
 
-        $this->assertEquals('12345678', $this->accessCode->code);
+        $this->assertEquals('112233', $this->accessCode->code);
     }
 
     public function test_it_throws_exception_for_invalid_code()

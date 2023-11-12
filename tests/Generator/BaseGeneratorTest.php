@@ -58,34 +58,34 @@ class BaseGeneratorTest extends TestCase
     {
         $generator = new BaseGenerator(allowPalindrome: true);;
 
-        $this->assertTrue($generator->validateValue('12344321'));
+        $this->assertTrue($generator->validateValue('135541'));
     }
 
     public function test_it_throws_exception_for_long_code()
     {
         $this->expectException(InvalidCodeException::class, 'The code must be 8 characters long.');
 
-        $this->generator->validateValue('123456789');
+        $this->generator->validateValue('1122334');
     }
 
     public function test_it_throws_exception_for_short_code()
     {
         $this->expectException(InvalidCodeException::class, 'The code must be 8 characters long.');
 
-        $this->generator->validateValue('1234567');
+        $this->generator->validateValue('1122334');
     }
 
     public function test_it_throws_exception_for_code_with_letters()
     {
         $this->expectException(InvalidCodeException::class, 'The code must only contain numbers.');
 
-        $this->generator->validateValue('1234567a');
+        $this->generator->validateValue('11223a');
     }
 
     public function test_it_throws_exception_for_palindrome_code()
     {
         $this->expectException(InvalidCodeException::class, 'The code must not be a palindrome.');
 
-        $this->generator->validateValue('12344321');
+        $this->generator->validateValue('123321');
     }
 }

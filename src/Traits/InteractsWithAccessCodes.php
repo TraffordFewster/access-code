@@ -98,13 +98,13 @@ trait InteractsWithAccessCodes
      * @param  string $code The code to find.
      * @return self The model.
      */
-    public static function findWithCode(string $code): self
+    public static function findWithCode(string $code): ?self
     {
         $accessCode = AccessCode::where([
             'code' => $code,
             'model_type' => self::class,
-        ])->firstOrFail();
+        ])->first();
 
-        return $accessCode->model;
+        return $accessCode?->model;
     }
 }

@@ -12,7 +12,7 @@ class BaseGenerator
 {
     public function __construct(
         protected bool $numberOnly = true,
-        protected int $length = 8,
+        protected int $length = 6,
         protected bool $allowPalindrome = false
     )
     {
