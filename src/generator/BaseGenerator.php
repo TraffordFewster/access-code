@@ -4,6 +4,7 @@ namespace Traffordfewster\AccessCode\Generator;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Traffordfewster\AccessCode\Rules\NoPalindrome;
 
 class BaseGenerator
 {
@@ -33,7 +34,7 @@ class BaseGenerator
                 $this->numberOnly ? "digits:$this->length" : "size:$this->length",
                 // "max:$this->length",
                 $this->numberOnly ? 'numeric' : 'alpha_num',
-                $this->allowPalindrome ? '' : 'different:'.strrev($value),
+                $this->allowPalindrome ? '' : new NoPalindrome,
                 'unique:access_codes,code'
             ],
         ], [
