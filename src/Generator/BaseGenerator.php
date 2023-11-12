@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Traffordfewster\AccessCode\Exceptions\InvalidCodeException;
+use Traffordfewster\AccessCode\Rules\MaxRepeatingCharacters;
 use Traffordfewster\AccessCode\Rules\NoPalindrome;
 
 class BaseGenerator
@@ -13,7 +14,10 @@ class BaseGenerator
     public function __construct(
         protected bool $numberOnly = true,
         protected int $length = 6,
-        protected bool $allowPalindrome = false
+        protected bool $allowPalindrome = false,
+        protected int $maxRepeatingCharacters = 3,
+        protected int $sequenceLength = 3,
+        protected int $uniqueCharacters = 3,
     )
     {
         //
@@ -36,10 +40,10 @@ class BaseGenerator
                     'required',
                     'string',
                     $this->numberOnly ? "digits:$this->length" : "size:$this->length",
-                    // "max:$this->length",
                     $this->numberOnly ? 'numeric' : 'alpha_num',
                     $this->allowPalindrome ? '' : new NoPalindrome,
-                    'unique:access_codes,code'
+                    'unique:access_codes,code',
+                    new MaxRepeatingCharacters($this->maxRepeatingCharacters),
                 ],
             ], [
                 'value.different' => 'The code must not be a palindrome.',
