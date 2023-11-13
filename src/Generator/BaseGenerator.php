@@ -89,6 +89,9 @@ class BaseGenerator
             'numberOnly' => $this->numberOnly,
             'length' => $this->length,
             'allowPalindrome' => $this->allowPalindrome,
+            'maxRepeatingCharacters' => $this->maxRepeatingCharacters,
+            'sequenceLength' => $this->sequenceLength,
+            'uniqueCharacters' => $this->uniqueCharacters,
         ];
     }
 

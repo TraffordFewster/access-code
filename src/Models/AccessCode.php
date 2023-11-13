@@ -69,4 +69,17 @@ class AccessCode extends Model
 
         return $code;
     }
+
+    /**
+     * Get the remaining codes based just on the length of the code.
+     *
+     * @return int The remaining codes.
+     */
+    public static function getRemainingCodes(BaseGenerator $generator = null): int
+    {
+        $generator ??= new BaseGenerator();
+        $totalCodes = self::whereRaw('LENGTH(CODE) = ?', [$generator->getLength()])->count();
+        $maxCodes = 10 ** $generator->getLength();
+        return $maxCodes - $totalCodes - 1;
+    }
 }

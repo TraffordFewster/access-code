@@ -62,4 +62,22 @@ class AccessCodeTest extends TestCase
 
         $this->accessCode->setCode('invalidcode');
     }
+
+    public function test_get_remaining_codes_updates_remaining_codes()
+    {
+        $this->assertEquals(999999, AccessCode::getRemainingCodes());
+
+        $exampleSavedCode = AccessCode::create([
+            'code' => '112233',
+            'code_criteria' => (string) new BaseGenerator(),
+            'model_type' => TestModel::class,
+            'model_id' => 1,
+        ]);
+
+        $this->assertEquals(999998, AccessCode::getRemainingCodes());
+
+        $exampleSavedCode->delete();
+
+        $this->assertEquals(999999, AccessCode::getRemainingCodes());
+    }
 }
