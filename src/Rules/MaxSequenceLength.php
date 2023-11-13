@@ -34,11 +34,6 @@ class MaxSequenceLength implements ValidationRule
                 continue;
             }
 
-            // if the current character is the same as the previous character, continue
-            if ($character === $previousCharacter) {
-                continue;
-            }
-
             // if the direction is null, check both directions
             if ($direction === null) {
                 // check next character in the alphabet

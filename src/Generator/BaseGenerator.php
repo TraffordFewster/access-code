@@ -7,7 +7,9 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Traffordfewster\AccessCode\Exceptions\InvalidCodeException;
 use Traffordfewster\AccessCode\Rules\MaxRepeatingCharacters;
+use Traffordfewster\AccessCode\Rules\MaxSequenceLength;
 use Traffordfewster\AccessCode\Rules\NoPalindrome;
+use Traffordfewster\AccessCode\Rules\UniqueCharacters;
 
 class BaseGenerator
 {
@@ -16,7 +18,7 @@ class BaseGenerator
         protected int $length = 6,
         protected bool $allowPalindrome = false,
         protected int $maxRepeatingCharacters = 3,
-        protected int $sequenceLength = 3,
+        protected int $sequenceLength = 4,
         protected int $uniqueCharacters = 3,
     )
     {
@@ -44,6 +46,8 @@ class BaseGenerator
                     $this->allowPalindrome ? '' : new NoPalindrome,
                     'unique:access_codes,code',
                     new MaxRepeatingCharacters($this->maxRepeatingCharacters),
+                    new MaxSequenceLength($this->sequenceLength),
+                    new UniqueCharacters($this->uniqueCharacters),
                 ],
             ], [
                 'value.different' => 'The code must not be a palindrome.',
@@ -121,5 +125,35 @@ class BaseGenerator
     public function getAllowPalindrome(): bool
     {
         return $this->allowPalindrome;
+    }
+
+    /**
+     * Get the value of maxRepeatingCharacters
+     *
+     * @return int
+     */
+    public function getMaxRepeatingCharacters(): int
+    {
+        return $this->maxRepeatingCharacters;
+    }
+
+    /**
+     * Get the value of sequenceLength
+     *
+     * @return int
+     */
+    public function getSequenceLength(): int
+    {
+        return $this->sequenceLength;
+    }
+
+    /**
+     * Get the value of uniqueCharacters
+     *
+     * @return int
+     */
+    public function getUniqueCharacters(): int
+    {
+        return $this->uniqueCharacters;
     }
 }

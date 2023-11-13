@@ -22,14 +22,9 @@ class MaxRepeatingCharacters implements ValidationRule
     public function getRepeatingCharacters(string $value): array
     {
         $repeatingCharacters = [];
-        $previousCharacter = null;
 
         foreach (str_split($value) as $character) {
-            if ($character === $previousCharacter) {
-                isset($repeatingCharacters[$character]) ? $repeatingCharacters[$character]++ : $repeatingCharacters[$character] = 1;
-            }
-
-            $previousCharacter = $character;
+            isset($repeatingCharacters[$character]) ? $repeatingCharacters[$character]++ : $repeatingCharacters[$character] = 1;
         }
 
         return $repeatingCharacters;
